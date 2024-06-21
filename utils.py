@@ -1637,7 +1637,7 @@ if __name__ == "__main__":
     #compareVisuallyMOTs(MOT_n, MOT_s, MOT_m, MOT_l, MOT_x, "/mnt/work/datasets/AntTracking/videos/ant_subset_1/ant_subset_1-024.mp4", graph=True, Layer_1=True, Layer_2=True, Layer_3=True, Layer_4=True)
     compareVisuallyMOTs(iou, giou, ciou, diou, ct_dist, "/mnt/work/datasets/AntTracking/videos/ant_subset_1/ant_subset_1-024.mp4", graph=False, Layer_1=False, Layer_2=False, Layer_3=False, Layer_4=False)
 
-    #video2Frames(r"E:\TFG\manualTrackAnnotation\ant_subset_1-024.mp4", r"E:\TFG\manualTrackAnnotation\frames")
+    #video2Frames("/mnt/work/datasets/AntTracking/videos/ant_subset_1/ant_subset_1-024.mp4", "/mnt/work/datasets/AntTracking/videos/ant_subset_1/frames")
     displayVideoWithBBoxes("/home/usuaris/imatge/marc.corretge/AntTracking/YOLO_TRACKING/resultsEvalPerMemoria_giouSplit-0.60/ant_subset_1-024_YOLOv8n_Marc_MOT.txt", "/mnt/work/datasets/AntTracking/videos/ant_subset_1/ant_subset_1-024.mp4", frameAndWait=True)
 
     displayVideoWithBBoxesFowardBarck("/home/usuaris/imatge/marc.corretge/AntTracking/YOLO_TRACKING/resultsEvalPerMemoria_giouSplit-0.60/ant_subset_1-024_YOLOv8n_Marc_MOT.txt", "/mnt/work/datasets/AntTracking/videos/ant_subset_1/ant_subset_1-024.mp4") 

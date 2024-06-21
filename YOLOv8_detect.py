@@ -4,7 +4,12 @@ import random
 import cv2
 import numpy as np
 
-DIR = r"datasets\test\ant_subset_1-000_det_dataset_0_000226_1_7.png" # We can use a single image, a folder with images or a video
+DIR = "datasets/test/ant_subset_1-000_det_dataset_0_000226_1_7.png" # We can use a single image, a folder with images or a video
+
+
+# Load the model
+model = YOLO("models_detect_pol/best.pt")
+
 
 
 #  Final declaracio de variables
@@ -69,10 +74,6 @@ if FILE == "VID":
     frame_cnt = 0
 
 
-
-
-# Load the model
-model = YOLO(r"models_detect_pol\best.pt")
 
 
 
