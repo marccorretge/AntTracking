@@ -176,22 +176,6 @@ def process_bboxes(frame, print_bboxes, YOLO=False, SAHI=False):
         return frame[0].orig_img, detections_MOT
     
 
-############################################
-#          Afegir bbox al MOT list         #
-############################################
-
-def add_bbox_2_MOT_Matrix(frame_cnt, bbox):
-    MOT_Matrix = np.zeros((len(bbox), 5))
-    for index, i in enumerate(bbox):
-        class_id, x1, y1, x2, y2, score, class_name = i
-        #MOT.append([frame_cnt, -1, x1, y1, x2-x1, y2-y1, score, class_id, -1])
-        
-        MOT_Matrix[index] = [x1, y1, x2, y2, score]
-
-
-
-    return MOT_Matrix
-    
 
 ############################################
 #     Donat frame + bboxes, generar la     #
@@ -481,13 +465,13 @@ def displayVideoWithBBoxesFowardBarck(MOT_path, video_path, start_frame=0):
             exit()
         elif k == ord('a'):
             currentFrame -= 1
-            if currentFrame <= 0:
-                currentFrame = 0
+            if currentFrame <= start_frame:
+                currentFrame = start_frame
             print("frame", str(currentFrame).zfill(4), ".jpg")
         elif k == ord('z'):
             currentFrame -= 50
-            if currentFrame <= 0:
-                currentFrame = 0
+            if currentFrame <= start_frame:
+                currentFrame = start_frame
             print("frame", str(currentFrame).zfill(4), ".jpg")
         elif k == ord('d'):
             currentFrame += 1
@@ -500,7 +484,7 @@ def displayVideoWithBBoxesFowardBarck(MOT_path, video_path, start_frame=0):
                 currentFrame = len(frameHistory)-1
             print("frame", str(currentFrame).zfill(4), ".jpg")
         elif k == ord('i'):
-            currentFrame = 0
+            currentFrame = start_frame
             print("frame", str(currentFrame).zfill(4), ".jpg")
         elif k == ord('o'):
             currentFrame = len(frameHistory)-1

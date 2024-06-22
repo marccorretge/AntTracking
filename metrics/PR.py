@@ -14,7 +14,7 @@ option = 1
 # Rutas a los archivos de ground truth y predicciones
 GT_PATH = "/mnt/work/users/marc.corretge/GT/ant_subset_1-024_GT.txt"
 PRED_PATH = r"E:\TFG\manualTrackAnnotation\noSAHI\ant_subset_1-024_Pol_MOT.txt"
-dire_of_frames = "/mnt/work/users/marc.corretge/GT/frames/"
+#dire_of_frames = "/mnt/work/users/marc.corretge/GT/frames/"
 
 iou_thresholds = np.arange(0.1, 1.1, 0.2)
 
@@ -51,7 +51,7 @@ if option == 1:
         total_fn = 0
 
         for frame in range(min_frame, max_frame + 1):
-            img = cv2.imread(dire_of_frames + "\\frame" + str(frame).zfill(4) + ".png")
+            #img = cv2.imread(dire_of_frames + "\\frame" + str(frame).zfill(4) + ".png")
             list_done = []
             tp = 0
             fp = 0

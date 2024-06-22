@@ -29,23 +29,27 @@ VIDEO_PATH = "/mnt/work/datasets/AntTracking/videos/ant_subset_1/ant_subset_1-02
 cap = cv2.VideoCapture(VIDEO_PATH)
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-
+cap.release()
 
 GENERATE_MOT_FILE = True
 
-NUM_MAX_ANTS = 10000
-
+#NUM_MAX_ANTS = 10000
 
 def clic(event, x, y, flags, param):
     if event == cv2.EVENT_LBUTTONDOWN:
         print(f'Posición del pixel: ({x}, {y})')
 
 
-random_colors = [(255,0,0), (0,255,0), (0,0,255), (255,255,0), (0,255,255), (255,0,255), (255,255,255), (0,0,0), (100,100,100), (200,200,200)]       
+det_thresh = 0.5
+max_age = 30
+min_hits = 3
+iou_threshold = 0.3
+delta_t = 3
+asso_func = "giou"
+inertia = 0.2
+use_byte = False
 
-
-
-ocsort_tracker = OCSort(det_thresh=0.5, max_age=30, min_hits=3, iou_threshold=0.3, delta_t=3, asso_func="giou", inertia=0.2, use_byte=False)
+ocsort_tracker = OCSort(det_thresh=det_thresh, max_age=max_age, min_hits=min_hits, iou_threshold=iou_threshold, delta_t=delta_t, asso_func=asso_func, inertia=inertia, use_byte=use_byte)
 MOT_FILE = "/home/usuaris/imatge/marc.corretge/AntTracking/YOLO_TRACKING/resultsEvalPerMemoria_iouSplit-0.60/ant_subset_1-024_YOLOv8n_Marc_MOT.txt"
 
 directory_out_MOT_OCSORT = MOT_FILE.replace("MOT.txt", "MOT_OCSORT.txt")
@@ -58,6 +62,8 @@ directory_out_MOT_OCSORT = MOT_FILE.replace("MOT.txt", "MOT_OCSORT.txt")
 #################################################################################################################################
 #  Inici del codi
 
+# Si volem visualitzar les deteccions en el video (no implementat) podem fer servir aquesta llista de colors
+random_colors = [(255,0,0), (0,255,0), (0,0,255), (255,255,0), (0,255,255), (255,0,255), (255,255,255), (0,0,0), (100,100,100), (200,200,200)]       
 
 print("Start time: " + str(datetime.now()), flush=True)
 
@@ -100,9 +106,9 @@ for frame in range(min_frame, max_frame + 1):
     new_list_to_print = []
     list_of_ids = []
     all_MOTs_ID = [] 
-    paths = []
-    for _ in range(NUM_MAX_ANTS):
-        paths.append([]) 
+    #paths = []
+    #for _ in range(NUM_MAX_ANTS):
+    #    paths.append([]) 
 
     for detection in ocsort_tracker.trackers:
         if detection.age != 0:
@@ -122,11 +128,11 @@ for frame in range(min_frame, max_frame + 1):
             # 0: frame_cnt, 1: class_id, 2: minx, 3: miny, 4: width, 5: height, 6: score, 7: x, 8: y, 9: z
             all_MOTs_ID.append((frame, class_id, minx, miny, maxx-minx, maxy-miny, score, -1, -1, -1))
 
-    # rellenem els paths amb -1 si no hi ha data
-    if len(list_of_ids) > 0:
-        for i in range(NUM_MAX_ANTS):
-            if i not in list_of_ids:
-                paths[i].append((-1,-1,-1,-1,-1,-1,-1,-1))
+    ## rellenem els paths amb -1 si no hi ha data
+    #if len(list_of_ids) > 0:
+    #    for i in range(NUM_MAX_ANTS):
+    #        if i not in list_of_ids:
+    #            paths[i].append((-1,-1,-1,-1,-1,-1,-1,-1))
 
 
     ### GENERAR MOT FILE AMB TOTES LES DETECCIONS A CADA FRAME + ID del tracker OC-SORT

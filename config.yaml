@@ -1,0 +1,8 @@
+path: /mnt/work/users/marc.corretge/train_YOLO_imatgesMeves/train/
+train: images/train
+val: images/val
+test: images/test
+
+# Classes
+names:
+  0: ant

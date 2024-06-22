@@ -16,6 +16,7 @@ YOLO_LETTER = args.YOLO_LETTER
 YOLO_DATASET = args.YOLO_DATASET
 
 ROI = 640
+OVERLAP = 0.2
 
 DETECT = True
 TRACK = False
@@ -32,6 +33,10 @@ cap = cv2.VideoCapture(video_path)
 frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 #fps = cap.get(cv2.CAP_PROP_FPS)
+
+newFolder = "resultsEvalPerMemoria_iouSplit-0.75"
+newOutPath = os.path.join("/home/usuaris/imatge/marc.corretge/AntTracking/YOLO_TRACKING/", newFolder)
+os.makedirs(newOutPath, exist_ok=True)
 
 
 
@@ -76,7 +81,7 @@ while success:
             print("ROI and frame shape are equals: overlap = 0", flush=True)
             roi_frame = splitFrame(frame, ROI, overlap=0.0)
         else:
-            roi_frame = splitFrame(frame, ROI, overlap=0.2)
+            roi_frame = splitFrame(frame, ROI, overlap=OVERLAP)
         
         roi_dict = {}
 
@@ -230,9 +235,7 @@ cap.release()
 
 
 # save MOT in txt file
-newFolder = "resultsEvalPerMemoria_iouSplit-0.75"
-os.makedirs("/home/usuaris/imatge/marc.corretge/AntTracking/YOLO_TRACKING/" + newFolder, exist_ok=True)
-with open("/home/usuaris/imatge/marc.corretge/AntTracking/YOLO_TRACKING/" + newFolder + "/ant_subset_1-024_YOLOv8" + YOLO_LETTER + "_" + YOLO_DATASET+"_MOT.txt", "w") as f:
+with open(os.path.join(newOutPath, "/ant_subset_1-024_YOLOv8" + YOLO_LETTER + "_" + YOLO_DATASET+"_MOT.txt"), "w") as f:
     for frame in MOT:
         for row in frame:
             row = np.array(row)
